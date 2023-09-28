@@ -1,16 +1,29 @@
 {
   "name": "movie_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the first version of MyFlix. Will continuously update.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cameron Smith",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
     "lodash": "^4.17.21"
-  }
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cameron8325/MyFlix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cameron8325/MyFlix/issues"
+  },
+  "homepage": "https://github.com/Cameron8325/MyFlix#readme"
 }
