@@ -4,3 +4,8 @@ Timestamp: Tue Sep 26 2023 15:03:33 GMT-0400 (Eastern Daylight Time)
 URL: /favicon.ico
 Timestamp: Tue Sep 26 2023 15:03:33 GMT-0400 (Eastern Daylight Time)
 
+::ffff:127.0.0.1 - - [01/Oct/2023:19:56:55 +0000] "GET /index.html HTTP/1.1" 404 149 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [01/Oct/2023:19:57:50 +0000] "GET / HTTP/1.1" 200 18 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [01/Oct/2023:19:57:50 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://127.0.0.1:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [01/Oct/2023:19:57:56 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [01/Oct/2023:19:58:06 +0000] "GET /movies HTTP/1.1" 200 825 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
