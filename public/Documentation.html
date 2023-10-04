@@ -1,2 +1,124 @@
-MyFlix
-        This API provides information about movies. You can use it to search for movies, retrieve movie details, and more. This document will guide you on how to make requests and use the API effectively.
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Documentation</title>
+</head>
+<body>
+    <h1>API Documentation</h1>
+
+    <!-- Endpoint 1: Return a list of ALL movies -->
+    <h2>Endpoint 1: Return a list of ALL movies</h2>
+    <p><strong>Description:</strong> This endpoint returns a list of all movies available.</p>
+    <p><strong>Endpoint URL:</strong> /movies</p>
+    <p><strong>Method Type:</strong> GET</p>
+    <p><strong>Query Parameters:</strong> None</p>
+    <p><strong>Request Body:</strong> None</p>
+    <p><strong>Response Data Format:</strong> Plain Text</p>
+    <p><strong>Example Response:</strong> "Return a list of ALL movies"</p>
+
+    <!-- Endpoint 2: Return data about a single movie by title -->
+    <h2>Endpoint 2: Return data about a single movie by title</h2>
+    <p><strong>Description:</strong> This endpoint returns data about a movie based on its title.</p>
+    <p><strong>Endpoint URL:</strong> /movies/:title</p>
+    <p><strong>Method Type:</strong> GET</p>
+    <p><strong>Query Parameters:</strong> None</p>
+    <p><strong>Request Body:</strong> None</p>
+    <p><strong>Response Data Format:</strong> Plain Text</p>
+    <p><strong>Example Response:</strong> "Return data about the movie with title: {title}"</p>
+
+    <!-- Endpoint 3: Return data about a genre by name -->
+    <h2>Endpoint 3: Return data about a genre by name</h2>
+    <p><strong>Description:</strong> This endpoint returns data about a genre based on its name/title.</p>
+    <p><strong>Endpoint URL:</strong> /genres/:name</p>
+    <p><strong>Method Type:</strong> GET</p>
+    <p><strong>Query Parameters:</strong> None</p>
+    <p><strong>Request Body:</strong> None</p>
+    <p><strong>Response Data Format:</strong> Plain Text</p>
+    <p><strong>Example Response:</strong> "Return data about the genre with name: {name}"</p>
+
+    <!-- Endpoint 4: Return data about a director by name -->
+    <h2>Endpoint 4: Return data about a director by name</h2>
+    <p><strong>Description:</strong> This endpoint returns data about a director based on their name.</p>
+    <p><strong>Endpoint URL:</strong> /directors/:name</p>
+    <p><strong>Method Type:</strong> GET</p>
+    <p><strong>Query Parameters:</strong> None</p>
+    <p><strong>Request Body:</strong> None</p>
+    <p><strong>Response Data Format:</strong> Plain Text</p>
+    <p><strong>Example Response:</strong> "Return data about the director with name: {name}"</p>
+
+  <!-- Endpoint 5: Allow new users to register -->
+<h2>Endpoint 5: Allow new users to register</h2>
+<p><strong>Description:</strong> This endpoint allows new users to register.</p>
+<p><strong>Endpoint URL:</strong> /users/register</p>
+<p><strong>Method Type:</strong> POST</p>
+<p><strong>Query Parameters:</strong> None</p>
+<p><strong>Request Body:</strong> JSON</p>
+<p><strong>Request Body Example:</strong></p>
+<pre>
+    {
+        "username": "newuser",
+        "email": "newuser@example.com",
+        "password": "password123"
+    }
+</pre>
+<p><strong>Response Data Format:</strong> Plain Text</p>
+<p><strong>Example Response:</strong> "User registration successful"</p>
+
+<!-- Endpoint 6: Allow users to update their user info -->
+<h2>Endpoint 6: Allow users to update their user info</h2>
+<p><strong>Description:</strong> This endpoint allows users to update their user information.</p>
+<p><strong>Endpoint URL:</strong> /users/:userId</p>
+<p><strong>Method Type:</strong> PUT</p>
+<p><strong>Query Parameters:</strong> None</p>
+<p><strong>Request Body:</strong> JSON</p>
+<p><strong>Request Body Example:</strong></p>
+<pre>
+    {
+        "username": "updateduser"
+    }
+</pre>
+<p><strong>Response Data Format:</strong> Plain Text</p>
+<p><strong>Example Response:</strong> "Update user info for user with ID: {userId}"</p>
+
+<!-- Endpoint 7: Allow users to add a movie to their list of favorites -->
+<h2>Endpoint 7: Allow users to add a movie to their list of favorites</h2>
+<p><strong>Description:</strong> This endpoint allows users to add a movie to their list of favorites.</p>
+<p><strong>Endpoint URL:</strong> /users/:userId/favorites</p>
+<p><strong>Method Type:</strong> POST</p>
+<p><strong>Query Parameters:</strong> None</p>
+<p><strong>Request Body:</strong> None</p>
+<p><strong>Response Data Format:</strong> Plain Text</p>
+<p><strong>Example Response:</strong> "Movie added to favorites for user with ID: {userId}"</p>
+
+<!-- Endpoint 8: Allow users to remove a movie from their list of favorites -->
+<h2>Endpoint 8: Allow users to remove a movie from their list of favorites</h2>
+<p><strong>Description:</strong> This endpoint allows users to remove a movie from their list of favorites.</p>
+<p><strong>Endpoint URL:</strong> /users/:userId/favorites/:movieId</p>
+<p><strong>Method Type:</strong> DELETE</p>
+<p><strong>Query Parameters:</strong> None</p>
+<p><strong>Request Body:</strong> None</p>
+<p><strong>Response Data Format:</strong> Plain Text</p>
+<p><strong>Example Response:</strong> "Movie removed from favorites for user with ID: {userId}, Movie ID: {movieId}"</p>
+
+<!-- Endpoint 9: Allow existing users to deregister -->
+<h2>Endpoint 9: Allow existing users to deregister</h2>
+<p><strong>Description:</strong> This endpoint allows existing users to deregister.</p>
+<p><strong>Endpoint URL:</strong> /users/:userId</p>
+<p><strong>Method Type:</strong> DELETE</p>
+<p><strong>Query Parameters:</strong> None</p>
+<p><strong>Request Body:</strong> None</p>
+<p><strong>Response Data Format:</strong> Plain Text</p>
+<p><strong>Example Response:</strong> "User with ID {userId} has been deregistered"</p>
+
+    <!-- Welcome Endpoint -->
+    <h2>Welcome Endpoint</h2>
+    <p><strong>Description:</strong> This endpoint welcomes users to MyFlix.</p>
+    <p><strong>Endpoint URL:</strong> /</p>
+    <p><strong>Method Type:</strong> GET</p>
+    <p><strong>Query Parameters:</strong> None</p>
+    <p><strong>Request Body:</strong> None</p>
+    <p><strong>Response Data Format:</strong> Plain Text</p>
+    <p><strong>Example Response:</strong> "Welcome to MyFlix!"</p>
+
+</body>
+</html>
