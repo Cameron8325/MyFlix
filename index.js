@@ -4,11 +4,16 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
 const express = require('express');
 const app = express();
-    morgan = require('morgan');
-    fs = require('fs');
-    path = require('path');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' })
