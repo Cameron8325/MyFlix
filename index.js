@@ -4,7 +4,9 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://127.0.0.1:27017/cfDB');
+console.log(mongoose.connection.readyState);
 
 const express = require('express');
 const app = express();
@@ -24,6 +26,7 @@ app.use(express.static('public'));
 
 // Endpoint to return a list of ALL movies to the user
 app.get('/movies', async (req, res) => {
+  console.log(mongoose.connection.readyState);
     Movies.find().then(Movies => res.json(Movies));
 });
 
