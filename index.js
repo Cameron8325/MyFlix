@@ -31,7 +31,7 @@ app.get('/movies', async (req, res) => {
 
 // Endpoint to return data about a single movie by title
 app.get('/movies/:title', async (req, res) => {
-  await Movies.findOne({ Title: req.params.name })
+  await Movies.findOne({ Title: req.params.title })
   .then((movie) => {
     if (!movie) {
       return res.status(404).send('No movies found for the specified title.');
@@ -102,9 +102,8 @@ app.post('/users', async (req, res) => {
 });
 
 // Endpoint to allow users to update their user info
-app.put('/users/:userId', async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-    $set:
+app.put('/users/:Username', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
       Password: req.body.Password,
@@ -112,18 +111,18 @@ app.put('/users/:userId', async (req, res) => {
       Birthday: req.body.Birthday
     }
   },
-    { new: true })
-    .then((updatedUser) => {
-      res.json(updatedUser);
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).send('Error: ' + err);
-    })
-});
+  { new: true }) // This line makes sure that the updated document is returned
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  })
 
+});
 // Endpoint to allow users to add a movie to their list of favorites
-app.post('/users/:userId/favorites', async (req, res) => {
+app.post('/users/:Username/movies/:MovieID', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavoriteMovies: req.params.MovieID }
   },
@@ -138,7 +137,7 @@ app.post('/users/:userId/favorites', async (req, res) => {
 });
 
 // Endpoint to allow users to remove a movie from their list of favorites
-app.delete('/users/:userId/favorites/:movieId', async (req, res) => {
+app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
@@ -153,7 +152,7 @@ app.delete('/users/:userId/favorites/:movieId', async (req, res) => {
 });
 
 // Endpoint to allow existing users to deregister
-app.delete('/users/:userId', async (req, res) => {
+app.delete('/users/:Username', async (req, res) => {
   await Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
