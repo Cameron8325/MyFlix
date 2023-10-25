@@ -71,3 +71,6 @@ Timestamp: Fri Oct 20 2023 19:33:22 GMT-0400 (Eastern Daylight Time)
 ::1 - - [24/Oct/2023:21:43:38 +0000] "GET /movies HTTP/1.1" 200 4958 "-" "PostmanRuntime/7.34.0"
 ::1 - - [24/Oct/2023:21:43:48 +0000] "GET /movies HTTP/1.1" 200 4958 "-" "PostmanRuntime/7.34.0"
 ::1 - - [25/Oct/2023:13:56:44 +0000] "GET /movies HTTP/1.1" 200 4958 "-" "PostmanRuntime/7.34.0"
+::1 - - [25/Oct/2023:14:17:49 +0000] "POST /users HTTP/1.1" 500 56 "-" "PostmanRuntime/7.34.0"
+::1 - - [25/Oct/2023:14:18:10 +0000] "POST /users HTTP/1.1" 500 56 "-" "PostmanRuntime/7.34.0"
+::1 - - [25/Oct/2023:14:18:58 +0000] "POST /users HTTP/1.1" 201 183 "-" "PostmanRuntime/7.34.0"
