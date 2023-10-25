@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
+const { error } = require('console');
 
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' })
@@ -24,26 +25,53 @@ app.use(express.static('public'));
 
 // Endpoint to return a list of ALL movies to the user
 app.get('/movies', async (req, res) => {
-    Movies.find().then(Movies => res.json(Movies));
+  Movies.find().then(Movies => res.json(Movies));
 });
 
 
 // Endpoint to return data about a single movie by title
-app.get('/movies/:title', (req, res) => {
-    const movieTitle = req.params.title;
-    res.send(`Return data about the movie with title: ${movieTitle}`);
+app.get('/movies/:title', async (req, res) => {
+  await Movies.findOne({ Title: req.params.name })
+  .then((movie) => {
+    if (!movie) {
+      return res.status(404).send('No movies found for the specified title.');
+    }
+    res.json(movie);
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
 // Endpoint to return data about a genre by name
-app.get('/genres/:name', (req, res) => {
-    const genreName = req.params.name;
-    res.send(`Return data about the genre with name: ${genreName}`);
+app.get('/genres/:name', async (req, res) => {
+  await Movies.find({ 'Genre.Name': req.params.name })
+  .then((movies) => {
+    if (movies.length === 0) {
+      return res.status(404).send('No movies found for the specified genre.');
+    }
+    res.json(movies);
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
 // Endpoint to return data about a director by name
-app.get('/directors/:name', (req, res) => {
-    const directorName = req.params.name;
-    res.send(`Return data about the director with name: ${directorName}`);
+app.get('/directors/:name', async (req, res) => {
+  await Movies.findOne({'Director.Name': req.params.name })
+  .then((movie) => {
+    if (!movie) {
+      return res.status(404).send('No movies found for the specified title.');
+    }
+    res.json(movie);
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
 // Endpoint to allow new users to register
@@ -60,11 +88,11 @@ app.post('/users', async (req, res) => {
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
-          .then((user) =>{res.status(201).json(user) })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
+          .then((user) => { res.status(201).json(user) })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          })
       }
     })
     .catch((error) => {
@@ -74,39 +102,81 @@ app.post('/users', async (req, res) => {
 });
 
 // Endpoint to allow users to update their user info
-app.put('/users/:userId', (req, res) => {
-    const userId = req.params.userId;
-    res.send(`Update user info for user with ID: ${userId}`);
+app.put('/users/:userId', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $set:
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+    { new: true })
+    .then((updatedUser) => {
+      res.json(updatedUser);
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send('Error: ' + err);
+    })
 });
 
 // Endpoint to allow users to add a movie to their list of favorites
-app.post('/users/:userId/favorites', (req, res) => {
-    const userId = req.params.userId;
-    res.send(`Movie added to favorites for user with ID: ${userId}`);
+app.post('/users/:userId/favorites', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $push: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true })
+ .then((updatedUser) => {
+   res.json(updatedUser);
+ })
+ .catch((err) => {
+   console.error(err);
+   res.status(500).send('Error: ' + err);
+ });
 });
 
 // Endpoint to allow users to remove a movie from their list of favorites
-app.delete('/users/:userId/favorites/:movieId', (req, res) => {
-    const userId = req.params.userId;
-    const movieId = req.params.movieId;
-    res.send(`Movie removed from favorites for user with ID: ${userId}, Movie ID: ${movieId}`);
+app.delete('/users/:userId/favorites/:movieId', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $pull: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true })
+ .then((updatedUser) => {
+   res.json(updatedUser);
+ })
+ .catch((err) => {
+   console.error(err);
+   res.status(500).send('Error: ' + err);
+ });
 });
 
 // Endpoint to allow existing users to deregister
-app.delete('/users/:userId', (req, res) => {
-    const userId = req.params.userId;
-    res.send(`User with ID ${userId} has been deregistered`);
+app.delete('/users/:userId', async (req, res) => {
+  await Users.findOneAndRemove({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Username + ' was not found.');
+      } else {
+        res.status(200).send(req.params.Username + ' deleted.');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 app.get('/', (req, res) => {
-    res.send('Welcome to MyFlix!');
+  res.send('Welcome to MyFlix!');
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+  console.log('Your app is listening on port 8080.');
 });
