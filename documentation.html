@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MyFlix API Documentation</title>
+</head>
+<body>
+  <h1>MyFlix API Documentation</h1>
+
+  <h2>Movies</h2>
+
+  <h3>Get All Movies</h3>
+  <p><strong>Endpoint:</strong> <code>GET /movies</code></p>
+  <p>This endpoint retrieves a list of all movies.</p>
+  <h4>Response:</h4>
+  <pre>
+    [
+      {
+        "_id": "movie_id",
+        "Title": "Movie Title",
+        "Description": "Movie Description",
+        "Genre": {
+          "Name": "Genre Name",
+          "Description": "Genre Description"
+        },
+        "Director": {
+          "Name": "Director Name",
+          "Description": "Director Description"
+        },
+        "ImageUrl": "movie_image.jpg",
+        "Featured": true
+      }
+    ]
+  </pre>
+
+  <h3>Get Movie by Title</h3>
+  <p><strong>Endpoint:</strong> <code>GET /movies/:title</code></p>
+  <p>This endpoint retrieves data about a single movie by its title.</p>
+  <h4>Response:</h4>
+  <pre>
+    {
+      "_id": "movie_id",
+      "Title": "Movie Title",
+      "Description": "Movie Description",
+      "Genre": {
+        "Name": "Genre Name",
+        "Description": "Genre Description"
+      },
+      "Director": {
+        "Name": "Director Name",
+        "Description": "Director Description"
+      },
+      "ImageUrl": "movie_image.jpg",
+      "Featured": true
+    }
+  </pre>
+
+  <h2>Users</h2>
+
+  <h3>Register a New User</h3>
+  <p><strong>Endpoint:</strong> <code>POST /users</code></p>
+  <p>This endpoint allows users to register by providing their information in the request body.</p>
+  <h4>Request Body:</h4>
+  <pre>
+    {
+      "Username": "user123",
+      "Password": "password123",
+      "Email": "user@example.com",
+      "Birthday": "1990-01-01"
+    }
+  </pre>
+  <h4>Response:</h4>
+  <pre>
+    {
+      "_id": "user_id",
+      "Username": "user123",
+      "Email": "user@example.com",
+      "Birthday": "1990-01-01",
+      "FavoriteMovies": [],
+      "__v": 0
+    }
+  </pre>
+
+  <h3>Update User Information</h3>
+  <p><strong>Endpoint:</strong> <code>PUT /users/:Username</code></p>
+  <p>This endpoint allows users to update their information. Provide the updated user data in the request body.</p>
+  <h4>Request Body:</h4>
+  <pre>
+    {
+      "Username": "new_username",
+      "Password": "new_password",
+      "Email": "new_email@example.com",
+      "Birthday": "1995-02-15"
+    }
+  </pre>
+  <h4>Response:</h4>
+  <pre>
+    {
+      "_id": "user_id",
+      "Username": "new_username",
+      "Email": "new_email@example.com",
+      "Birthday": "1995-02-15",
+      "FavoriteMovies": [],
+      "__v": 0
+    }
+  </pre>
+
+  <h3>Add Movie to User's Favorites</h3>
+  <p><strong>Endpoint:</strong> <code>POST /users/:Username/movies/:MovieID</code></p>
+  <p>This endpoint allows users to add a movie to their list of favorite movies.</p>
+  <h4>Response:</h4>
+  <pre>
+    {
+      "_id": "user_id",
+      "Username": "user123",
+      "Email": "user@example.com",
+      "Birthday": "1990-01-01",
+      "FavoriteMovies": ["movie_id"],
+      "__v": 0
+    }
+  </pre>
+
+  <h3>Remove Movie from User's Favorites</h3>
+  <p><strong>Endpoint:</strong> <code>DELETE /users/:Username/movies/:MovieID</code></p>
+  <p>This endpoint allows users to remove a movie from their list of favorite movies.</p>
+  <h4>Response:</h4>
+  <pre>
+    {
+      "_id": "user_id",
+      "Username": "user123",
+      "Email": "user@example.com",
+      "Birthday": "1990-01-01",
+      "FavoriteMovies": [],
+      "__v": 0
+    }
+  </pre>
+
+  <h3>Deregister User</h3>
+  <p><strong>Endpoint:</strong> <code>DELETE /users/:Username</code></p>
+  <p>This endpoint allows users to deregister. No request body is required.</p>
+  <h4>Response:</h4>
+  <p><code>"user123 deleted."</code></p>
+
+</body>
+</html>
