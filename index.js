@@ -9,6 +9,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { useNewUrlParser: true, useU
 const express = require('express');
 const app = express();
 app.use(express.json());
+
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let auth = require('./auth')(app);
@@ -19,9 +21,6 @@ require('./passport.js');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
-const { error } = require('console');
-const bodyParser = require('body-parser');
-
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' })
 
