@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
+const { check, validattionResult } = require('express-validator');
+
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -101,7 +103,27 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), as
 });
 
 // Endpoint to allow new users to register
-app.post('/users', async (req, res) => {
+app.post('/users',
+[
+  check('Username', 'Username is required')
+    .not().isEmpty()
+    .isAlphanumeric().withMessage('Username should only contain letters and numbers')
+    .isLength({ min: 3, max: 20 }).withMessage('Username should be between 3 and 20 characters'),
+  check('Password', 'Password is required')
+    .not().isEmpty()
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  check('Email', 'Email is required')
+    .not().isEmpty()
+    .isEmail().withMessage('Invalid email address'),
+  check('Birthday', 'Birthday is required')
+    .not().isEmpty()
+], async (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });  
+}
+
   let hashedPassword = Users.hashPassword(req.body.Password)
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
