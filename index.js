@@ -15,7 +15,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['https://camflixcf-73cf2f8e0ca3.herokuapp.com/movies'];
+let allowedOrigins = ['https://camflixcf-73cf2f8e0ca3.herokuapp.com'];
+
 
 const { check, validationResult } = require('express-validator');
 
