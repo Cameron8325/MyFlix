@@ -105,7 +105,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), as
 });
 
 // Endpoint to allow new users to register
-app.post('/users',
+app.post('/register',
 [
   check('Username', 'Username is required')
     .not().isEmpty()
