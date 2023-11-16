@@ -58,6 +58,25 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
+// Endpoint for user login
+app.post('/login',
+  [
+    check('Username', 'Username is required').not().isEmpty(),
+    check('Password', 'Password is required').not().isEmpty(),
+  ],
+  passport.authenticate('local', { session: false }),
+  async (req, res) => {
+    try {
+      const user = req.user;
+      const token = generateJWTToken(user.toJSON());
+      res.json({ user, token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    }
+  }
+);
+
 
 // Endpoint to return data about a single movie by title
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
