@@ -58,6 +58,21 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
+//Endpoint to return current user information
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send('User not found.');
+      }
+      res.json(user);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
+
 
 // Endpoint to return data about a single movie by title
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
