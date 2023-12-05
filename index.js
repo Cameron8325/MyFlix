@@ -59,8 +59,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 });
 
 //Endpoint to return current user information
-app.get('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOne({ username: req.params.username })
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
         return res.status(404).send('User not found.');
@@ -122,10 +122,10 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), as
 // Endpoint to allow new users to register
 app.post('/register',
 [
-  check('username', 'username is required')
+  check('Username', 'Username is required')
     .not().isEmpty()
-    .isAlphanumeric().withMessage('username should only contain letters and numbers')
-    .isLength({ min: 3, max: 20 }).withMessage('username should be between 3 and 20 characters'),
+    .isAlphanumeric().withMessage('Username should only contain letters and numbers')
+    .isLength({ min: 3, max: 20 }).withMessage('Username should be between 3 and 20 characters'),
   check('Password', 'Password is required')
     .not().isEmpty()
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
@@ -142,14 +142,14 @@ app.post('/register',
 }
 
   let hashedPassword = Users.hashPassword(req.body.Password)
-  await Users.findOne({ username: req.body.username })
+  await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.username + 'already exists');
+        return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users
           .create({
-            username: req.body.username,
+            Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
@@ -168,15 +168,15 @@ app.post('/register',
 });
 
 // Endpoint to allow users to update their user info
-app.put('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  if (req.user.username !== req.params.username) {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
 
-  await Users.findOneAndUpdate({ username: req.params.username }, {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $set:
     {
-      username: req.body.username,
+      Username: req.body.Username,
       Password: req.body.Password,
       Email: req.body.Email,
       Birthday: req.body.Birthday
@@ -194,9 +194,9 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false }), as
 });
 
 // Endpoint to allow users to add a movie to their list of favorites
-app.post('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndUpdate({ username: req.params.username }, {
-    $push: { FavoriteMovies: req.params.movieid }
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $push: { FavoriteMovies: req.params.MovieID }
   },
     { new: true })
     .then((updatedUser) => {
@@ -209,9 +209,9 @@ app.post('/users/:username/movies/:movieid', passport.authenticate('jwt', { sess
 });
 
 // Endpoint to allow users to remove a movie from their list of favorites
-app.delete('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndUpdate({ username: req.params.username }, {
-    $pull: { FavoriteMovies: req.params.movieid }
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $pull: { FavoriteMovies: req.params.MovieID }
   },
     { new: true })
     .then((updatedUser) => {
@@ -224,13 +224,13 @@ app.delete('/users/:username/movies/:movieid', passport.authenticate('jwt', { se
 });
 
 // Endpoint to allow existing users to deregister
-app.delete('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndRemove({ username: req.params.username })
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.username + ' was not found.');
+        res.status(400).send(req.params.Username + ' was not found.');
       } else {
-        res.status(200).send(req.params.username + ' deleted.');
+        res.status(200).send(req.params.Username + ' deleted.');
       }
     })
     .catch((err) => {
