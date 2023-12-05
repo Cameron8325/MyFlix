@@ -59,7 +59,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 });
 
 //Endpoint to return current user information
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
@@ -168,7 +168,7 @@ app.post('/register',
 });
 
 // Endpoint to allow users to update their user info
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
@@ -194,7 +194,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), as
 });
 
 // Endpoint to allow users to add a movie to their list of favorites
-app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.post('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavoriteMovies: req.params.MovieID }
   },
