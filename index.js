@@ -173,25 +173,33 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false }), as
     return res.status(400).send('Permission denied');
   }
 
-  await Users.findOneAndUpdate({ Username: req.params.username }, {
-    $set:
-    {
-      Username: req.body.Username,
-      Password: req.body.Password,
-      Email: req.body.Email,
-      Birthday: req.body.Birthday
+  const updateData = {
+    Username: req.body.Username,
+    Email: req.body.Email,
+    Birthday: req.body.Birthday,
+  };
+
+  // Check if the password is provided and hash it
+  if (req.body.Password) {
+    try {
+      const hashedPassword = await Users.hashPassword(req.body.Password);
+      updateData.Password = hashedPassword;
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send('Error hashing password');
     }
-  },
-    { new: true }) // This line makes sure that the updated document is returned
+  }
+
+  await Users.findOneAndUpdate({ Username: req.params.username }, { $set: updateData }, { new: true })
     .then((updatedUser) => {
       res.json(updatedUser);
     })
     .catch((err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
-    })
-
+    });
 });
+
 
 // Endpoint to allow users to add a movie to their list of favorites
 app.post('/users/:username/movies/:movieid', passport.authenticate('jwt', { session: false }), async (req, res) => {
