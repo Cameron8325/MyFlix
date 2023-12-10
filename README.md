@@ -85,10 +85,6 @@ Micahel Cameron Smith
 
 ---
 
-Feel free to customize the documentation further based on your preferences and additional information. Good luck with your MyFlix application!
-
----
-
 ## Contributing
 
 If you would like to contribute to my knowledge and help me learn, I welcome your input and suggestions. Feel free to reach out and share your insights, feedback, or ideas for improvement. Together, we can enhance this project and continue to learn and grow in the field of web development.
