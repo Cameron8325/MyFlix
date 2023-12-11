@@ -81,7 +81,7 @@ For a more visual representation of the API, you can check the documentation.htm
 
 ## Author
 
-Micahel Cameron Smith
+Michael Cameron Smith
 
 ---
 
