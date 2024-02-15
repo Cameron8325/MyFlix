@@ -73,6 +73,21 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), as
     });
 });
 
+// Endpoint to return favorite movies for a user
+app.get('/users/:username/favorite-movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOne({ Username: req.params.username })
+    .populate('FavoriteMovies')
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send('User not found.');
+      }
+      res.json(user.FavoriteMovies);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
 
 // Endpoint to return data about a single movie by title
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
