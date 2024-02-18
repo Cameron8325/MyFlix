@@ -15,7 +15,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['https://camflixcf-73cf2f8e0ca3.herokuapp.com', 'https://cameron8325.github.io/myFlix-Angular/', 'http://localhost:1234', 'http://localhost:4200', 'https://main--myflix-mcs.netlify.app','https://myflix-mcs.netlify.app'];
+let allowedOrigins = ['https://camflixcf-73cf2f8e0ca3.herokuapp.com', 'https://cameron8325.github.io/myFlix-Angular', 'http://localhost:1234', 'http://localhost:4200', 'https://main--myflix-mcs.netlify.app','https://myflix-mcs.netlify.app'];
 
 
 const { check, validationResult } = require('express-validator');
