@@ -1,3 +1,6 @@
+/**
+ * Module dependencies.
+ */
 const jwtSecret = 'your_jwt_secret';
 
 const jwt = require('jsonwebtoken'),
@@ -5,6 +8,11 @@ const jwt = require('jsonwebtoken'),
 
 require('./passport');
 
+/**
+ * Generates JWT token.
+ * @param {Object} user - User object.
+ * @returns {string} JWT token.
+ */
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.Username,
@@ -13,9 +21,13 @@ let generateJWTToken = (user) => {
   });
 }
 
+/**
+ * Exports authentication routes.
+ * @param {Object} router - Express router object.
+ */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
-    passport.authenticate('local', { session: false }, (error,user, info) => {
+    passport.authenticate('local', { session: false }, (error, user, info) => {
       if (error || !user) {
         return res.status(400).json({
           message: 'Something is not right',
